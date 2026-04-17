@@ -1,88 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/t/7807688?s=200&v=4">
-        <script src="https://cdn.tailwindcss.com"></script>
-        <title>404 | Hedgehoglet</title>
-        <style>
-            @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-            }
-            @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-            }
-            .fade {
-                animation: fadeIn 0.5s ease-in-out;
-            }
-            .loader {
-                border: 4px solid rgba(0, 0, 0, 0.1);
-                border-top: 4px solid #3498db;
-                border-radius: 50%;
-                width: 24px;
-                height: 24px;
-                animation: spin 1s linear infinite;
-                margin: 0 auto;
-            }
-        </style>
-    </head>
-    <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-        <div class="max-w-screen-md mx-auto text-center p-4 sm:p-6 lg:p-8 bg-white rounded-md shadow-md fade">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800 mb-4">404</h1>
-            <p class="text-base sm:text-lg md:text-xl text-gray-600 mb-4">Oops! The page you are looking for does not exist.</p>
-            <div id="loader" class="loader mx-auto mb-4"></div>
-            <img id="randomImage" src="" class="hidden mb-4 max-w-xs mx-auto object-cover object-center" onload="handleImageLoad()">
-            <p id="redirectMessage" class="text-base sm:text-lg md:text-xl text-gray-600 mb-4">Redirecting in <span id="countdown">10</span> seconds...</p>
-        </div>
-        <script>
-            let seconds = 10;
-            let destinationURL = "https://hedgehoglet.dev/";
-            let apiKey = "0UTRbFtkMxAplrohufYco5IY74U8hOes"; // Found somewhere in codepen.io
-            let tag = "mikochi"; // Change later?
-            
-            function updateCountdown() {
-                document.getElementById("countdown").innerText = seconds;
-            }
-            
-            function redirectWithTimer() {
-                updateCountdown();
-            
-                const countdownInterval = setInterval(function () {
-                    seconds--;
-                    updateCountdown();
-            
-                    if (seconds <= 0) {
-                        clearInterval(countdownInterval);
-                        window.location.href = destinationURL;
-                    }
-                }, 1000);
-            }
-            
-            function handleImageLoad() {
-                const loader = document.getElementById("loader");
-                const randomImage = document.getElementById("randomImage");
-                loader.style.display = "none";
-                randomImage.classList.remove("hidden");
-                redirectWithTimer();
-            }
-            
-            // Fetch random GIF from Giphy API
-            fetch(`https://api.giphy.com/v1/stickers/random?api_key=${apiKey}&tag=${tag}&limit=1`)
-                .then(response => response.json())
-                .then(r => {
-                    const randomStickerUrl = r.data.images.downsized.url;
-                    const randomImage = document.getElementById("randomImage");
-                    randomImage.src = randomStickerUrl;
-                })
-                .catch(error => console.error("Error fetching random GIF:", error));
-        </script>
-    </body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404: Page Not Found | Hedgehoglet</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#080808">
+  <link rel="icon" href="assets/logo.png">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #080808;
+      --border:  #1e1e1e;
+      --muted:   #555555;
+      --accent:  #a78bfa;
+      --accent2: #f472b6;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: #f0f0f0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.25rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse at center, rgba(167, 139, 250, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      max-width: 400px;
+      animation: fadeUp 0.5s ease-out;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      animation: wobble 4s ease-in-out infinite;
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-4deg); }
+      50%       { transform: rotate(4deg); }
+    }
+
+    .error-code {
+      font-size: clamp(5rem, 20vw, 8rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      background: linear-gradient(120deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #e0e0e0;
+    }
+
+    p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .countdown {
+      font-size: 0.8rem;
+      color: #333;
+    }
+
+    .countdown span {
+      color: var(--accent);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #ffffff;
+      color: #0a0a0a;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.7rem 1.6rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: opacity 0.18s, transform 0.18s;
+    }
+
+    .btn-home:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    @media (max-width: 400px) {
+      .logo       { width: 80px; height: 80px; }
+      .btn-home   { width: 100%; justify-content: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <img src="assets/logo.png" alt="Hedgehoglet" class="logo" width="100" height="100">
+
+    <div class="error-code" aria-label="Error 404">404</div>
+
+    <h1>Page not found</h1>
+    <p>Looks like this hedgehog wandered off. The page you're looking for doesn't exist.</p>
+
+    <p class="countdown">Redirecting in <span id="countdown">10</span>s</p>
+
+    <a href="https://hedgehoglet.dev/" class="btn-home">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Back to home
+    </a>
+  </main>
+
+  <script>
+    let seconds = 10;
+    const el = document.getElementById('countdown');
+    const timer = setInterval(() => {
+      el.textContent = --seconds;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        window.location.href = 'https://hedgehoglet.dev/';
+      }
+    }, 1000);
+  </script>
+</body>
+
 </html>
