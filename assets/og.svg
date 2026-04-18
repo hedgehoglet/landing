@@ -1,0 +1,42 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c89838"/>
+      <stop offset="100%" stop-color="#c4847a"/>
+    </linearGradient>
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="overlay" result="blend"/>
+      <feComposite in="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#111111"/>
+
+  <!-- Ambient orbs -->
+  <ellipse cx="220" cy="180" rx="380" ry="280" fill="rgba(200,152,56,0.07)"/>
+  <ellipse cx="980" cy="460" rx="320" ry="240" fill="rgba(196,132,122,0.06)"/>
+
+  <!-- Grain overlay -->
+  <rect width="1200" height="630" fill="transparent" filter="url(#noise)" opacity="0.03"/>
+
+  <!-- Frame border -->
+  <rect x="40" y="40" width="1120" height="550" rx="20" ry="20" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+
+  <!-- Japanese name -->
+  <text x="600" y="218" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#666666" letter-spacing="6">ヘッジホグレット</text>
+
+  <!-- Main title -->
+  <text x="600" y="320" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="88" font-weight="800" letter-spacing="-4" fill="url(#titleGrad)">Hedgehoglet</text>
+
+  <!-- Tagline -->
+  <text x="600" y="390" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="#888888" letter-spacing="0.5">We tinker. We ship. We learn.</text>
+
+  <!-- Divider line -->
+  <line x1="480" y1="428" x2="720" y2="428" stroke="#2a2a2a" stroke-width="1"/>
+
+  <!-- Domain -->
+  <text x="600" y="462" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#444444" letter-spacing="1">hedgehoglet.dev</text>
+</svg>
